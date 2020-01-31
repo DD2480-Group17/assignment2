@@ -1,54 +1,46 @@
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
-
 import java.io.IOException;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
 /**
- Skeleton of a ContinuousIntegrationServer which acts as webhook
- See the Jetty documentation for API documentation of those classes.
+ * A CI server which acts as webhook for GitHub
  */
-public class ContinousIntegrationServer extends AbstractHandler
-{
+public class ContinousIntegrationServer extends AbstractHandler {
+    private static final AtomicInteger counter = new AtomicInteger(0);// Used for unique work directory paths
+
     public void handle(String target,
                        Request baseRequest,
                        HttpServletRequest request,
                        HttpServletResponse response)
-            throws IOException, ServletException
-    {
+
+            throws IOException, ServletException {
+
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
         System.out.println(target);
 
-        String requestData = request.getReader().lines().collect(Collectors.joining());
-        System.out.println(requestData);
-
-        // here you do all the continuous integration tasks
-        // for example
-        // 1st clone your repository
-        // 2nd compile the code
-
-        //clone repository
-        String line = "git clone git@github.com:EdvinArdo/webHookTest.git";
-        DefaultExecutor executor = new DefaultExecutor();
-        CommandLine cmdLine = CommandLine.parse(line);
-        executor.execute(cmdLine);
+        String jsonPayload = IOUtils.toString(request.getReader());
+        Builder builder = new Builder(counter.getAndIncrement());
+        builder.build(jsonPayload);
 
         response.getWriter().println("CI job done");
     }
 
-    // used to start the CI server in command line
-    public static void main(String[] args) throws Exception
-    {
+    /**
+     * Starts the CI Server
+     *
+     * @param args Command line arguments
+     */
+    public static void main(String[] args) throws Exception {
         Server server = new Server(8017);
         server.setHandler(new ContinousIntegrationServer());
         server.start();
