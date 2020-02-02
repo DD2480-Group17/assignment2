@@ -1,22 +1,63 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class History {
+
+    private String directoryPath = "";
+
+    private final String testPath = "test_build_history";
+    private final String usedPath = "build_history";
 
     /**
      * Initialize history and create the directory build_history if it does not exist
      */
-    public History(){
-        
+    public History() {
+        directoryPath = usedPath;
+        File file = new File(directoryPath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
     }
+
+        /**
+         * Initialize history with a path to test folder. This mode is used if the class should be tested as a JUnit test.
+         *
+         * @param isThisATestCase, if isThisATestCase it true the class will redirect all function to a test folder. This
+         *                         is done to prevent damege on data during tests. If isThisATestCase is false, the class
+         *                         will direct all function to the original folder.
+         */
+     public History(boolean isThisATestCase){
+            if (isThisATestCase)
+                directoryPath = testPath;
+            else
+                directoryPath = usedPath;
+            File file = new File(directoryPath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+        }
+
     /**
-     * The method save, saves the information in the parameter, provided from a process.
-     * The function assigns a timestamp to the information and saves it as a file with the name
+     * The method save(), saves the information provided from a process into a new file.
+     * The method assigns a timestamp and saves it as a file with the name
      * commitID + " " + TIMESTAMP in the map build_history
      * @param buildResult, contains the result from the build
-     * @param commitID, unique ID for the commit/process/push should be searchable
+     * @param commitID, unique ID for the process should be searchable
      */
-    public void save(String buildResult, String commitID){
+    public void save(String buildResult, String commitID) throws IOException {
+        LocalDateTime now = LocalDateTime.now();
+        String time = now.toString();
+        String timestamp = time.replace("-", "T");
+        timestamp = timestamp.replace(".", "T");
+        timestamp = timestamp.replace(":", "T");
 
+        String filename = directoryPath + "/" + commitID + " " + timestamp + ".txt";
+
+        FileWriter writer = new FileWriter(filename);
+        writer.write(buildResult);
+        writer.close();
     }
 
     /**
@@ -45,5 +86,10 @@ public class History {
      */
     private File searchForCommitID(String commitID){
         return null;
+    }
+
+    public static void main(String[] args) throws Exception{
+        History history = new History(true);
+        history.save("this is a test", "testCommit");
     }
 }
