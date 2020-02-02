@@ -11,15 +11,23 @@ class JSONParserTest {
             "  \"repository\": {\n" +
             "    \"name\": \"testRepoName\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
+            "  },\n" +
+            "  \"head_commit\": {\n" +
+            "       \"id\": \"abc123\" \n" +
             "  }\n" +
             "}";
+    // missingBracketJsonString has a curly bracket missing at the beginning
     final String missingBracketJsonString = "\n" +
             "  \"ref\": \"refs/heads/testBranchName\",\n" +
             "  \"repository\": {\n" +
             "    \"name\": \"testRepoName\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
+            "  },\n" +
+            "  \"head_commit\": {\n" +
+            "       \"id\": \"abc123\" \n" +
             "  }\n" +
             "}";
+
     final JSONParser correctJsonParser = new JSONParser(correctJsonString);
     final JSONParser missingBracketJsonParser = new JSONParser(missingBracketJsonString);
 
@@ -58,4 +66,23 @@ class JSONParserTest {
     void getRepoNameException() {
         assertThrows(JSONException.class, missingBracketJsonParser::getRepoName);
     }
+
+    /**
+     * Tests that getHeadCommitHash returns the correct HEAD commit Hash.
+     */
+    @Test
+    @DisplayName("Test getHeadCommitHash correct")
+    void getHeadCommitHash() {
+        assertEquals("abc123", correctJsonParser.getHeadCommitHash());
+    }
+
+    /**
+     * Tests that getHeadCommitHash returns exception if the json object is not correct.
+     */
+    @Test()
+    @DisplayName("Test getHeadCommitHash exception")
+    void getGetHeadCommitHashException() {
+        assertThrows(JSONException.class, missingBracketJsonParser::getHeadCommitHash);
+    }
+
 }
