@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -15,19 +14,15 @@ public class History {
      * Initialize history and create the directory build_history if it does not exist
      */
     public History() {
-        directoryPath = usedPath;
-        File file = new File(directoryPath);
-        if (!file.exists()) {
-            file.mkdir();
-        }
+        this(false);
     }
 
     /**
      * Initialize history with a path to test folder. This mode is used if the class should be tested as a JUnit test.
      *
-     * @param isThisATestCase, if isThisATestCase it true the class will redirect all function to a test folder. This
-     *                         is done to prevent damege on data during tests. If isThisATestCase is false, the class
-     *                         will direct all function to the original folder.
+     * @param isThisATestCase if isThisATestCase it true the class will redirect all function to a test folder. This
+     *                        is done to prevent damege on data during tests. If isThisATestCase is false, the class
+     *                        will direct all function to the original folder.
      */
     public History(boolean isThisATestCase) {
         if (isThisATestCase)
@@ -45,8 +40,8 @@ public class History {
      * The function assigns a timestamp to the information and saves it as a file with the name
      * commitID + " " + TIMESTAMP in the map build_history
      *
-     * @param buildResult, contains the result from the build
-     * @param commitID,    unique ID for the commit/process/push should be searchable
+     * @param buildResult contains the result from the build
+     * @param commitID    unique ID for the commit/process/push should be searchable
      */
     public void save(String buildResult, String commitID) {
 
@@ -57,7 +52,7 @@ public class History {
      * Else it returns null.
      *
      * @param commitID
-     * @return content, which is the content of the commitID
+     * @return the content of the file with the name commitID
      */
     public String load(String commitID) {
         // if searchForCommits() returns null , return null
@@ -65,9 +60,14 @@ public class History {
     }
 
     /**
-     * The function listHistory returns all the commitID in the directory build_history in execution order
+     * The function listHistory returns all the commitID in the directory build_history in execution order, with the latest
+     * execution first.
      *
-     * @return, returns the history as a string, null if it does not exist
+     * @return returns the history as a string, null if it does not exist, the format of the string will be:
+     * commitID TIMESTAMP
+     * commitID2 TIMESTAMP
+     * Where TIMESTAMP has the format year month day hour minute second millisecond, all the entries are separated by T
+     * not blank-space.
      */
     public String listHistory() throws Exception {
         File dir = new File(directoryPath);
@@ -99,7 +99,8 @@ public class History {
     }
 
     /**
-     * The function checks if the file containing the name commiteID exists and return the file, otherwise null
+     * The method checks if it exists a file with the name commitID. If it exists the function returns the file,
+     * otherwise the method returns null.
      *
      * @param commitID
      * @return the file with correct ID or null if it does not exist
@@ -116,7 +117,7 @@ public class History {
         for (File file : files) {
             String[] info = file.getName().split(" ");
             if (info.length != 2)
-                return null;
+                continue;
             if (info[0].compareTo(commitID) == 0)
                 return file;
 
@@ -135,9 +136,9 @@ public class History {
             String[] time2 = o2.timeStamp.split("T");
             for (int i = 0; i < time1.length; i++) {
                 if (Integer.parseInt(time1[i]) < Integer.parseInt(time2[i])) {
-                    return -1;
-                } else if (Integer.parseInt(time1[i]) > Integer.parseInt(time2[i])) {
                     return 1;
+                } else if (Integer.parseInt(time1[i]) > Integer.parseInt(time2[i])) {
+                    return -1;
                 }
             }
             return 0;

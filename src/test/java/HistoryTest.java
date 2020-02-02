@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,11 +10,11 @@ class HistoryTest {
 
     /**
      * testListHistory is a JUnit test of the method listHistory in the history class. The function is creating
-     * three files in a test_folder, if listHistory returns the name of those files with timestamps in ascending orders the
+     * three files in a test_folder, if listHistory returns the name of those files with timestamps in descending orders the
      * test case is considered successful. All other outputs are considered as a fail.
      * <p>
      * Input: create files test_build_history/test 20T03T20T30 test_build_history/test 20T01T20T30 test_build_history/test 20T03T19T30
-     * Expected output: test 20T01T20T30 test 20T03T19T30 test 20T03T20T30
+     * Expected output: test 20T03T20T30 test 20T03T19T30 test 20T01T20T30
      */
     @Test
     public void testListHistory() {
@@ -41,13 +39,14 @@ class HistoryTest {
 
         } catch (IOException e) {
             e.printStackTrace();
+            fail();
         }
         try {
-            String correct = "test 20T01T20T30\ntest 20T03T19T30\ntest 20T03T20T30\n";
-            assertTrue(history.listHistory().compareTo(correct) == 0);
+            String correct = "test 20T03T20T30\ntest 20T03T19T30\ntest 20T01T20T30\n";
+            assertEquals(correct, history.listHistory());
         } catch (Exception e) {
-            fail();
             e.printStackTrace();
+            fail();
         } finally {
             file.delete();
             file1.delete();
@@ -90,16 +89,17 @@ class HistoryTest {
 
         } catch (IOException e) {
             e.printStackTrace();
+            fail();
         }
         try {
             File result = history.searchForCommitID("test1");
             assertNotNull(result);
-            assertTrue(result.getName().compareTo(file.getName()) == 0);
+            assertEquals(file.getName(), result.getName());
             result = history.searchForCommitID("test4");
             assertNull(result);
         } catch (Exception e) {
-            fail();
             e.printStackTrace();
+            fail();
         } finally {
             file.delete();
             file1.delete();
