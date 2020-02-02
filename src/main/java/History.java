@@ -12,8 +12,8 @@ public class History {
      * The method save, saves the information in the parameter, provided from a process.
      * The function assigns a timestamp to the information and saves it as a file with the name
      * commitID + " " + TIMESTAMP in the map build_history
-     * @param buildResult, contains the result from the build
-     * @param commitID, unique ID for the commit/process/push should be searchable
+     * @param buildResult contains the result from the build
+     * @param commitID unique ID for the commit/process/push should be searchable
      */
     public void save(String buildResult, String commitID){
 
