@@ -80,4 +80,15 @@ public class JSONParser {
     private String removeSurroundingQuotes(String string) {
         return string.substring(1, string.length() - 1);
     }
+
+    /**
+     * Gets HEAD commit hash value.
+     *
+     * @return HEAD commit hash value.
+     */
+    public String getHeadCommitHash() {
+        String commit_id = getValue(new String[]{"head_commit", "id"});
+        commit_id = removeSurroundingQuotes(commit_id);
+        return commit_id;
+    }
 }
