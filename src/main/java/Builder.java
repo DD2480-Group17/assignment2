@@ -1,19 +1,16 @@
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.io.FileUtils;
+import org.apache.maven.shared.invoker.*;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Collections;
 
 /**
  * A project builder that can clone git repositories, build maven projects and run units tests
  */
 public class Builder {
-    private static final String tokenFile = ".token";//file path to git access token
     private final int id;
-    private LogToString lts;
 
     /**
      * Initializes Builder with a unique id for creating work directory paths
@@ -22,89 +19,71 @@ public class Builder {
      */
     public Builder(int id) {
         this.id = id;
-        this.lts = new LogToString();
     }
 
     /**
-     * Reads git access token from file
+     * Parses the jsonPayload, clones the git repository, switches branch, runs mvn install,
+     * saves build output to file and cleans up
      *
-     * @return The git access token
-     */
-    private String readToken() throws IOException {
-        File file = new File(tokenFile);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String token = reader.readLine();
-        reader.close();
-        return token;
-    }
-
-    /**
-     * Runs a shell script responsible for cloning a git repository, building a maven project and running unit tests
-     *
-     * @param cloneURL   A git repository HTTPS URL
-     * @param repoName   The name of the git repository
-     * @param branchName The branch of the git repository to checkout
-     */
-    private int cloneBuildTest(String cloneURL, String repoName, String branchName) throws IOException {
-        return runCommandLine("sh cloneBuildTest.sh " + id + " " + cloneURL + " " + repoName + " " + branchName);
-    }
-
-    /**
-     * Parses the JSON payload, builds and tests the given git repository, logs the results
-     * (including the exit status in the last line of log) and then cleans up
-     *
-     * @param jsonPayload A GitHub webhook JSON String
+     * @param jsonPayload A Git webhook payload
      */
     public void build(String jsonPayload) {
-        // create JsonParser and History object
         JSONParser parser = new JSONParser(jsonPayload);
-        History history = new History();
 
+        String repoDir = "work/temp" + id + "/" + parser.getRepoName();
+
+        // clone repo
         try {
-            // get clone url and insert access token + "@" after https://;
-            StringBuilder gitCloneURLSB = new StringBuilder(parser.getCloneURL()).insert(8, readToken() + "@");
-            String gitCloneURL = gitCloneURLSB.toString();
-            // get repoName, get Branch name, get HEAD commit hash
-            String repoName = parser.getRepoName();
-            String branchName = parser.getBranchName();
-            String headCommitHash = parser.getHeadCommitHash();
+            cloneRepo(parser.getCloneURL(), parser.getBranchName(), repoDir);
+        } catch (GitAPIException e) {
+            System.err.println(e.getMessage());
+        }
 
-            // run clone, build and test script, given clone url, reponame, branch name
-            int cloneBuildTestExitValue = cloneBuildTest(gitCloneURL, repoName, branchName);
+        // maven install
+        try {
+            String outputFilePath = "build_history/build_" + System.currentTimeMillis() + "_" + parser.getHeadCommitHash();
+            mavenInstall(repoDir, outputFilePath);
+        } catch (MavenInvocationException | FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
 
-            //add exit status line to the end of the log history before saving
-            lts.processLine("\n", 0);
-            lts.processLine("Exit status " + cloneBuildTestExitValue, 0);
-
-            // save log history using History object
-            history.save(lts.toString(), headCommitHash);
+        // cleanup
+        try {
+            FileUtils.deleteDirectory(new File("work/temp" + id));
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        } finally {
-            try {
-                cleanup();
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
         }
     }
 
     /**
-     * Runs a shell script responsible for removing the temporary working directory
+     * Runs mvn install in the specified directory and outputs build log to file
+     *
+     * @param repoDir        A directory with maven project in it, including a pom.xml file
+     * @param outputFilePath The file path to write output to
      */
-    private void cleanup() throws IOException {
-        runCommandLine("sh cleanup.sh " + id);
+    private void mavenInstall(String repoDir, String outputFilePath) throws MavenInvocationException, FileNotFoundException {
+        InvocationRequest request = new DefaultInvocationRequest();
+        request.setPomFileName(repoDir + "/pom.xml");
+        request.setGoals(Collections.singletonList("install"));
+
+        Invoker invoker = new DefaultInvoker();
+        PrintStreamHandler handler = new PrintStreamHandler(new PrintStream(outputFilePath), true);
+        invoker.setOutputHandler(handler);
+        invoker.execute(request);
     }
 
     /**
-     * Runs a command line shell script
+     * Clones a Git repository and switches branch
      *
-     * @param line A shell script
+     * @param repoURI A Git repository URI
+     * @param branchName A branch name
+     * @param repoDir A directory in which to clone the repo
      */
-    private int runCommandLine(String line) throws IOException {
-        DefaultExecutor executor = new DefaultExecutor();
-        executor.setStreamHandler(new PumpStreamHandler(lts)); // redirect stdout and stderr to string handler
-        CommandLine cmdLine = CommandLine.parse(line);
-        return executor.execute(cmdLine);
+    private void cloneRepo(String repoURI, String branchName, String repoDir) throws GitAPIException {
+        Git git = Git.cloneRepository()
+                .setURI(repoURI)
+                .setDirectory(new File(repoDir))
+                .setBranch(branchName)
+                .call();
     }
 }
