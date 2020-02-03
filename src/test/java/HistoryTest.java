@@ -107,4 +107,30 @@ class HistoryTest {
         }
     }
 
+    /**
+     * Test that the load() method returns the correct file content if the file exists.
+     * Creates a file with commitID test1 and content "hello". After the test has been executed the test deletes the file.
+     * Input: commitID "test1"
+     * Expected value: "hello\\n"
+     */
+    @Test
+    void load() {
+        History history = new History(true);
+        File file = new File("test_build_history/test1 20T03T20T30");
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write("hello");
+            writer.close();
+
+            assertEquals("hello\\n", history.load("test1"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+
+        } finally {
+            file.delete();
+        }
+    }
 }

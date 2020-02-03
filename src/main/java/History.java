@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,27 +38,30 @@ public class History {
     }
 
     /**
-     * The method save, saves the information in the parameter, provided from a process.
-     * The function assigns a timestamp to the information and saves it as a file with the name
-     * commitID + " " + TIMESTAMP in the map build_history
-     *
-     * @param buildResult contains the result from the build
-     * @param commitID    unique ID for the commit/process/push should be searchable
-     */
-    public void save(String buildResult, String commitID) {
-
-    }
-
-    /**
      * The method execute searchForCommitID(). If the file exists, the method returns the content of the commit.
      * Else it returns null.
      *
      * @param commitID
-     * @return the content of the file with the name commitID
+     * @return content which is the content of the commitID
      */
-    public String load(String commitID) {
-        // if searchForCommits() returns null , return null
-        return null;
+    public String load(String commitID) throws IOException {
+        File fileObj = searchForCommitID(commitID);
+        String filename = "";
+
+        if (fileObj != null) {
+            filename = fileObj.toString();
+        } else {
+            return null;
+        }
+
+        BufferedReader file = new BufferedReader(new FileReader(filename));
+        String contents = "";
+        String line = "";
+
+        while ((line = file.readLine()) != null)
+            contents += line + "\\n";
+
+        return contents;
     }
 
     /**
