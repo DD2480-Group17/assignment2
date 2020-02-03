@@ -1,7 +1,5 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,27 +35,6 @@ public class History {
         if (!file.exists()) {
             file.mkdir();
         }
-    }
-
-    /**
-     * The method save(), saves the information provided from a process into a new file.
-     * The method assigns a timestamp and saves it as a file with the name
-     * commitID + " " + TIMESTAMP in the map build_history
-     * @param buildResult contains the result from the build
-     * @param commitID unique ID for the process should be searchable
-     */
-    public void save(String buildResult, String commitID) throws IOException {
-        LocalDateTime now = LocalDateTime.now();
-        String time = now.toString();
-        String timestamp = time.replace("-", "T");
-        timestamp = timestamp.replace(".", "T");
-        timestamp = timestamp.replace(":", "T");
-
-        String filename = directoryPath + "/" + commitID + " " + timestamp + ".txt";
-
-        FileWriter writer = new FileWriter(filename);
-        writer.write(buildResult);
-        writer.close();
     }
 
     /**
