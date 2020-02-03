@@ -15,8 +15,8 @@ public class History {
     /**
      * Initialize history and create the directory build_history if it does not exist
      */
-     public History() {
-         this(false);
+    public History() {
+        this(false);
     }
 
     /**
@@ -40,6 +40,7 @@ public class History {
     /**
      * The method execute searchForCommitID(). If the file exists, the method returns the content of the commit.
      * Else it returns null.
+     *
      * @param commitID
      * @return content which is the content of the commitID
      */
@@ -49,8 +50,7 @@ public class History {
 
         if (fileObj != null) {
             filename = fileObj.toString();
-        }
-        else{
+        } else {
             return null;
         }
 
@@ -130,6 +130,7 @@ public class History {
 
         return null;
     }
+
     /**
      * commitIDAndTimeStampHolderComparator is a comparator that is used to sort CommitIDAndTimeStampHolder in descending order
      */
