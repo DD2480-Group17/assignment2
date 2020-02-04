@@ -61,6 +61,7 @@ public class History {
         while ((line = file.readLine()) != null)
             contents += line + "\\n";
 
+        file.close();
         return contents;
     }
 
@@ -87,8 +88,10 @@ public class History {
 
         for (File file : files) {
             String[] info = file.getName().split(" ");
-            if (info.length != 2)
-                throw new Exception("Wrong amount of inputs");
+            if (info.length != 2) {
+                System.err.println("File with wrong format: "+file.getName());
+                continue;
+            }
             CommitIDAndTimeStampHolder commitIDAndTimeStampHolder = new CommitIDAndTimeStampHolder(info[0], info[1]);
             holders.add(commitIDAndTimeStampHolder);
         }
