@@ -48,7 +48,7 @@ public class Builder {
 
         // maven install
         try {
-            String outputFilePath = "build_history/" + parser.getHeadCommitHash() + " " + timestamp;
+            String outputFilePath = "build_history/" + parser.getHeadCommitHash() + "_" + timestamp;
             mavenInstall(repoDir, outputFilePath);
         } catch (MavenInvocationException | FileNotFoundException e) {
             System.err.println(e.getMessage());

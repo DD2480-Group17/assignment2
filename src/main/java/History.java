@@ -87,7 +87,7 @@ public class History {
         ArrayList<CommitIDAndTimeStampHolder> holders = new ArrayList<CommitIDAndTimeStampHolder>();
 
         for (File file : files) {
-            String[] info = file.getName().split(" ");
+            String[] info = file.getName().split("_");
             if (info.length != 2) {
                 System.err.println("File with wrong format: "+file.getName());
                 continue;
@@ -99,7 +99,7 @@ public class History {
 
         StringBuilder stringBuilder = new StringBuilder();
         for (CommitIDAndTimeStampHolder holder : holders) {
-            stringBuilder.append(holder.getCommitID() + " " + holder.getTimeStamp());
+            stringBuilder.append(holder.getCommitID() + "_" + holder.getTimeStamp());
             stringBuilder.append("\n");
         }
 
@@ -123,7 +123,7 @@ public class History {
             return null;
 
         for (File file : files) {
-            String[] info = file.getName().split(" ");
+            String[] info = file.getName().split("_");
             if (info.length != 2)
                 continue;
             if (info[0].compareTo(commitID) == 0)
