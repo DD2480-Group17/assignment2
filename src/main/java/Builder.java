@@ -32,6 +32,7 @@ public class Builder {
     public void build(String jsonPayload) {
         //parse JSON
         JSONParser parser = new JSONParser(jsonPayload);
+        Notifier notifier = new Notifier();
         String commitHash, branchName, cloneURL, repoName;
         try {
             commitHash = parser.getHeadCommitHash();
@@ -50,6 +51,9 @@ public class Builder {
 
         String repoDir = "work/temp" + id + "/" + repoName;
 
+        // update status
+        notifier.postStatus(jsonPayload, "pending", "The build is in progress", "continous-integration/assignment2", null);
+
         // clone repo
         try {
             cloneRepo(cloneURL, branchName, repoDir);
@@ -58,11 +62,19 @@ public class Builder {
         }
 
         // maven install
+        int result = -1;
         try {
             String outputFilePath = "build_history/" + parser.getHeadCommitHash() + "_" + timestamp;
-            mavenInstall(repoDir, outputFilePath);
+            result = mavenInstall(repoDir, outputFilePath);
         } catch (MavenInvocationException | FileNotFoundException e) {
             System.err.println(e.getMessage());
+        }
+
+        if (result == 0) {// build success
+            notifier.postStatus(jsonPayload, "success", "The build succeeded", "continous-integration/assignment2", null);
+
+        } else { // build fail
+            notifier.postStatus(jsonPayload, "failure", "The build failed", "continous-integration/assignment2", null);
         }
 
         // cleanup
@@ -79,7 +91,7 @@ public class Builder {
      * @param repoDir        A directory with maven project in it, including a pom.xml file
      * @param outputFilePath The file path to write output to
      */
-    private void mavenInstall(String repoDir, String outputFilePath) throws MavenInvocationException, FileNotFoundException {
+    private int mavenInstall(String repoDir, String outputFilePath) throws MavenInvocationException, FileNotFoundException {
         InvocationRequest request = new DefaultInvocationRequest();
         request.setPomFileName(repoDir + "/pom.xml");
         request.setGoals(Collections.singletonList("install"));
@@ -87,7 +99,9 @@ public class Builder {
         Invoker invoker = new DefaultInvoker();
         PrintStreamHandler handler = new PrintStreamHandler(new PrintStream(outputFilePath), true);
         invoker.setOutputHandler(handler);
-        invoker.execute(request);
+        InvocationResult result = invoker.execute(request);
+
+        return result.getExitCode();
     }
 
     /**

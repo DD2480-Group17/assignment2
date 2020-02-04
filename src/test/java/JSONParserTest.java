@@ -11,6 +11,9 @@ class JSONParserTest {
             "  \"repository\": {\n" +
             "    \"name\": \"testRepoName\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
+            "    \"owner\": {\n" +
+            "      \"name\": \"testOwnerName\",\n" +
+            "    },\n" +
             "  },\n" +
             "  \"head_commit\": {\n" +
             "       \"id\": \"abc123\" \n" +
@@ -22,6 +25,9 @@ class JSONParserTest {
             "  \"repository\": {\n" +
             "    \"name\": \"testRepoName\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
+            "    \"owner\": {\n" +
+            "      \"name\": \"testOwnerName\",\n" +
+            "    },\n" +
             "  },\n" +
             "  \"head_commit\": {\n" +
             "       \"id\": \"abc123\" \n" +
@@ -85,4 +91,15 @@ class JSONParserTest {
         assertThrows(JSONException.class, missingBracketJsonParser::getHeadCommitHash);
     }
 
+    @Test
+    @DisplayName("Test getOwnerName correct")
+    void getOwnerName() {
+        assertEquals(correctJsonParser.getOwnerName(), "testOwnerName");
+    }
+
+    @Test()
+    @DisplayName("Test getOwnerName exception")
+    void getOwnerNameException() {
+        assertThrows(JSONException.class, missingBracketJsonParser::getOwnerName);
+    }
 }
