@@ -21,9 +21,9 @@ class HistoryTest {
         History history = new History(true);
         Utility.clearDirectory("test_build_history");
 
-        File file = new File("test_build_history/test 20T03T20T30");
-        File file1 = new File("test_build_history/test 20T01T20T30");
-        File file2 = new File("test_build_history/test 20T03T19T30");
+        File file = new File("test_build_history/test_20T03T20T30");
+        File file1 = new File("test_build_history/test_20T01T20T30");
+        File file2 = new File("test_build_history/test_20T03T19T30");
         try {
 
             FileWriter writer = new FileWriter(file);
@@ -43,7 +43,7 @@ class HistoryTest {
             fail();
         }
         try {
-            String correct = "test 20T03T20T30\ntest 20T03T19T30\ntest 20T01T20T30\n";
+            String correct = "test_20T03T20T30\ntest_20T03T19T30\ntest_20T01T20T30\n";
             assertEquals(correct, history.listHistory());
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,9 +71,9 @@ class HistoryTest {
     public void testSearchForCommitID() {
         History history = new History(true);
 
-        File file = new File("test_build_history/test1 20T03T20T30");
-        File file1 = new File("test_build_history/test2 20T01T20T30");
-        File file2 = new File("test_build_history/test3 20T03T19T30");
+        File file = new File("test_build_history/test1_20T03T20T30");
+        File file1 = new File("test_build_history/test2_20T01T20T30");
+        File file2 = new File("test_build_history/test3_20T03T19T30");
         try {
 
             FileWriter writer = new FileWriter(file);
@@ -117,7 +117,7 @@ class HistoryTest {
     @Test
     void load() {
         History history = new History(true);
-        File file = new File("test_build_history/test1 20T03T20T30");
+        File file = new File("test_build_history/test1_20T03T20T30");
 
         try {
             FileWriter writer = new FileWriter(file);
