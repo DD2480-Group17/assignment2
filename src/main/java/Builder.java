@@ -1,6 +1,7 @@
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.shared.invoker.*;
 import org.eclipse.jgit.api.Git;
+import java.time.LocalDateTime;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.*;
@@ -23,12 +24,18 @@ public class Builder {
 
     /**
      * Parses the jsonPayload, clones the git repository, switches branch, runs mvn install,
-     * saves build output to file and cleans up
+     * saves build output to file with the format HeadCommitHash + YEARTMONTHTDAYTHOURTMINUTESTSECONDTMILLISECOND and cleans up
      *
      * @param jsonPayload A Git webhook payload
      */
     public void build(String jsonPayload) {
         JSONParser parser = new JSONParser(jsonPayload);
+        LocalDateTime now = LocalDateTime.now();
+        String time = now.toString();
+        String timestamp = time.replace("-", "T");
+        timestamp = timestamp.replace(".", "T");
+        timestamp = timestamp.replace(":", "T");
+
 
         String repoDir = "work/temp" + id + "/" + parser.getRepoName();
 
@@ -41,7 +48,7 @@ public class Builder {
 
         // maven install
         try {
-            String outputFilePath = "build_history/build_" + System.currentTimeMillis() + "_" + parser.getHeadCommitHash();
+            String outputFilePath = "build_history/" + parser.getHeadCommitHash() + " " + timestamp;
             mavenInstall(repoDir, outputFilePath);
         } catch (MavenInvocationException | FileNotFoundException e) {
             System.err.println(e.getMessage());
@@ -87,3 +94,4 @@ public class Builder {
                 .call();
     }
 }
+
