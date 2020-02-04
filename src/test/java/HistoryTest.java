@@ -19,6 +19,7 @@ class HistoryTest {
     @Test
     public void testListHistory() {
         History history = new History(true);
+        Utility.clearDirectory("test_build_history");
 
         File file = new File("test_build_history/test 20T03T20T30");
         File file1 = new File("test_build_history/test 20T01T20T30");
