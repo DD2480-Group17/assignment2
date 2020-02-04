@@ -15,6 +15,9 @@ class UtilityTest {
      */
     @Test
     public void testClearDirectory() {
+        File dir = new File("test_build_history");
+        if(!dir.exists())
+            dir.mkdir();
         File file = new File("test_build_history/test 20T03T20T30");
         File file1 = new File("test_build_history/test 20T01T20T30");
         File file2 = new File("test_build_history/test 20T03T19T30");
@@ -37,7 +40,7 @@ class UtilityTest {
             fail();
         }
         Utility.clearDirectory("test_build_history");
-        File dir = new File("test_build_history");
+
         File[] files = dir.listFiles();
         if (files != null) {
             assertEquals(0, files.length);
