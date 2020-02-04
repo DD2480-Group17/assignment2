@@ -3,6 +3,7 @@ import org.apache.maven.shared.invoker.*;
 import org.eclipse.jgit.api.Git;
 import java.time.LocalDateTime;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.json.JSONException;
 
 import java.io.*;
 import java.util.Collections;
@@ -29,19 +30,29 @@ public class Builder {
      * @param jsonPayload A Git webhook payload
      */
     public void build(String jsonPayload) {
+        //parse JSON
         JSONParser parser = new JSONParser(jsonPayload);
+        String commitHash, branchName, cloneURL, repoName;
+        try {
+            commitHash = parser.getHeadCommitHash();
+            branchName = parser.getBranchName();
+            cloneURL = parser.getCloneURL();
+            repoName = parser.getRepoName();
+        } catch (JSONException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         LocalDateTime now = LocalDateTime.now();
         String time = now.toString();
         String timestamp = time.replace("-", "T");
         timestamp = timestamp.replace(".", "T");
         timestamp = timestamp.replace(":", "T");
 
-
-        String repoDir = "work/temp" + id + "/" + parser.getRepoName();
+        String repoDir = "work/temp" + id + "/" + repoName;
 
         // clone repo
         try {
-            cloneRepo(parser.getCloneURL(), parser.getBranchName(), repoDir);
+            cloneRepo(cloneURL, branchName, repoDir);
         } catch (GitAPIException e) {
             System.err.println(e.getMessage());
         }
