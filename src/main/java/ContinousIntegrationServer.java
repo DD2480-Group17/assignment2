@@ -139,7 +139,9 @@ public class ContinousIntegrationServer {
             }
 
             // TODO: call the function the returns the HTML string for this request type.
-            return "list history response";
+            HTML html = new HTML(false);
+            String responseHTML = html.createHTMLPayload();
+            return responseHTML;
         }
     }
 
