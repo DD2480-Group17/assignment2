@@ -34,7 +34,7 @@ class JSONParserTest {
     @Test
     @DisplayName("Test getCloneURL correct")
     void getCloneURL() {
-        assertEquals(correctJsonParser.getCloneURL(), "https://github.com/Test/testRepoName.git");
+        assertEquals("https://github.com/Test/testRepoName.git", correctJsonParser.getCloneURL());
     }
 
     @Test()
@@ -46,7 +46,7 @@ class JSONParserTest {
     @Test
     @DisplayName("Test getBranchName correct")
     void getBranchName() {
-        assertEquals(correctJsonParser.getBranchName(), "testBranchName");
+        assertEquals("testBranchName", correctJsonParser.getBranchName());
     }
 
     @Test()
@@ -58,7 +58,7 @@ class JSONParserTest {
     @Test
     @DisplayName("Test getRepoName correct")
     void getRepoName() {
-        assertEquals(correctJsonParser.getRepoName(), "testRepoName");
+        assertEquals("testRepoName", correctJsonParser.getRepoName());
     }
 
     @Test()
