@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -14,6 +15,7 @@ class HTMLTest {
      * Expected value: "test\n"
      */
     @Test
+    @DisplayName("Test readFile() correct")
     void testReadFile() {
         Utility.clearDirectory("test_build_history");
         File file = new File("test_build_history/test.txt");
@@ -50,6 +52,7 @@ class HTMLTest {
      * Expected value: the content and the timestamp is correct for the commitID test1_20T03T20T30
      */
     @Test
+    @DisplayName("Test saveAllCommitInfo() correct")
     void testSaveAllCommitInfo() {
         Utility.clearDirectory("test_build_history");
         HTML html = new HTML(true);
@@ -114,6 +117,7 @@ class HTMLTest {
      * Expected value: UtilityTest  Tests run: 1 ...... - in HistoryTest
      */
     @Test
+    @DisplayName("Test removeContent() correct")
     void testRemoveContent() {
         HTML html1 = new HTML(true);
         Utility.clearDirectory("test_build_history");

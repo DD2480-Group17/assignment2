@@ -62,7 +62,6 @@ public class HTML {
      */
     public void saveAllCommitInfo(String historyContent) {
         commitList = historyContent.split("\n");
-        System.out.println(commitList[0] + commitList[1]);
         String commitContent = "";
 
         for (int i = 0; i < commitList.length; i++) {
@@ -72,7 +71,6 @@ public class HTML {
             String timestamp = commitInfo[1];
 
             try {
-                System.out.println(commit);
                 commitContent = history.load(commit);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -120,7 +118,7 @@ public class HTML {
             commitInfo = commitHashMap.get(commitList[i]); //Override
 
             String commitContent = commitInfo[1];
-            htmlContent += "<a href=\"commit/?id=" + commitList[i] + "\"><div id=" + commitList[i] + "<p><b>Commit ID:</b> " +  commitList[i] +  "</p><br></a>";
+            htmlContent += "<a href=\"commit/?id=" + commitList[i] + "\"><div id=" + commitList[i] + "<p><b>Commit ID:</b> " + commitList[i] + "</p><br></a>";
         }
         return htmlContent;
     }
@@ -131,7 +129,7 @@ public class HTML {
      * @param commitID of a commit
      * @return htmlContent which is the history of a single commit in HTML format
      */
-    public String parseCommitContent(String commitID){
+    public String parseCommitContent(String commitID) {
         String htmlContent = "";
         String[] commitInfo = commitHashMap.get(commitID); //Override
         String timestamp = commitInfo[0];
@@ -148,7 +146,7 @@ public class HTML {
      * Reads the templet of the HTML file and add the HTML format of the history of commits
      *
      * @return htmlContent which is the final HTML format for the list of history
-     *         hat will be used for the HTTP response
+     * hat will be used for the HTTP response
      */
     public String createListPayload() {
         String htmlContent = "";
@@ -176,9 +174,9 @@ public class HTML {
      * Reads the templet of the HTML file and add the HTML format of the history of commits
      *
      * @return htmlContent which is the final HTML format for the commit's content
-     *         that will be used for the HTTP response
+     * that will be used for the HTTP response
      */
-    public String createCommitPayload(String commitID){
+    public String createCommitPayload(String commitID) {
         String htmlContent = "";
 
         try {
