@@ -71,7 +71,7 @@ public class ContinousIntegrationServer {
 
             String jsonPayload = IOUtils.toString(request.getReader());
             Builder builder = new Builder(counter.getAndIncrement());
-            builder.build(jsonPayload);
+            builder.build(jsonPayload, request.getRequestURL().toString());
             return "CI Job Done";
         }
     }
