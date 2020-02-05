@@ -102,6 +102,7 @@ public class Builder {
         InvocationRequest request = new DefaultInvocationRequest();
         request.setPomFileName(repoDir + "/pom.xml");
         request.setGoals(Collections.singletonList("install"));
+        request.setBatchMode(true);
 
         Invoker invoker = new DefaultInvoker();
         PrintStreamHandler handler = new PrintStreamHandler(new PrintStream(outputFilePath), true);
