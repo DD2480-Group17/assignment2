@@ -76,22 +76,33 @@ CI successful build the program.
 * The ` execution ` of test cases are automatically preformed on pushed code. The functionality for execution where test by pushing failing tests to the CI server, which reported failed
 test. Then code with successful tests where pushed to the CI server which reported successful test.
 * The ` notification ` TODO
-## Open Source Material
 
 ## Contributions
-We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing.
+We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing. 
+We are also proud that we did tests between out program and github to verify functionality.
+
 
 In this section it is specified what each person contributed to the project with.
 
 Edvin Ardö:
-
+* Code, implemented TODO
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation. 
 
 Marcus Jonsson Ewerbring:
+* Code, implemented History, HistoryTest, Utility, UtilityTest and refactored code.
+* Pull request, reviewed several pull requests.
+* Documentation, README and code documentation. 
 
 Johanna Iivanainen:
-
+* Code, implemented History, HistoryTest,... TODO
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation. 
 
 George Rezkalla:
+* Code, implemented History, HistoryTest,... TODO
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
 
 ## Contribution policy: TO DO BEFORE WE COMMIT TO REPO
 * Create a test case for the function you have created.
