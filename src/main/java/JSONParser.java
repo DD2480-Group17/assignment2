@@ -91,4 +91,14 @@ public class JSONParser {
         commit_id = removeSurroundingQuotes(commit_id);
         return commit_id;
     }
+
+    /**
+     * Retrieves owner name from the JSON String
+     *
+     * @return The value under "owner" and then "name" from the JSON String
+     */
+    public String getOwnerName() {
+        String res = getValue(new String[]{"repository", "owner", "name"});
+        return removeSurroundingQuotes(res);
+    }
 }
