@@ -51,10 +51,31 @@ user. If the latest push resulted in failed tests. It is possible to connect to 
 * Apache Maven 3.6.0
 * JUnit (Jupiter 5.0 or later)
 
+#### Setup Github
+In order to use this CI with your github project you need to link github to the computer you run the software on.
+* Go to the github repository you want to link to the CI and click on ` Settings `.
+* In the settings tab press ` Webhooks ` and press `Add webhook`.
+* In `Payload URL` enter `https://COMPUTER_IP:8017/webhook/`, where COMPUTER_IP is the running computers IP. Press `Add webhook`.
+* Generate a token at github and put it in a file called `.token` which should added to your repository.
+
 #### Run and build the program
+To run and build the program, enter ` mvn -q exec:java -Dexec.mainClass="ContinousIntegrationServer"` in the terminal.
+When the server is running on your computer following commands can be used. The server uses the port 8017, however, to access the program you need to use the running computers IP-address. 
 
+* ` list all recorded commits ` to view all recorded commits, enter the following in your web-browser `https://COMPTER_IP:8017`, where COMPUTER_IP is the running computers ip.
+* ` View detailed information about one commit ` to view detailed information about a certain commit enter `https://COMPUTER_IP:8017/commit/?id=COMMIT_ID`, where COMMIT_ID are the unique hash for the commit 
+to display. The available hashes can be found on the ` list all recorded commits ` page.
 #### Run Test Cases
+The program also has test cases for each class.
+* On the terminal, first, go to the top directory of the project where the pom.xml file exists. Then, the tests can be executed by the following command ` mvn test`.
 
+#### How the functionality where tested
+The classes ` History `, ` Utility `, ` JSONParser ` and ` LogToString ` are all tested by unit-tests. How to run the unit-tests are explained in [Run Test Cases](#Run Test Cases).
+* The ` compilation ` has been tested by pushing code with syntax-errors, the CI reported the program failed to build. Code with correct syntax where pushed to the
+CI successful build the program.
+* The ` execution ` of test cases are automatically preformed on pushed code. The functionality for execution where test by pushing failing tests to the CI server, which reported failed
+test. Then code with successful tests where pushed to the CI server which reported successful test.
+* The ` notification ` TODO
 ## Open Source Material
 
 ## Contributions
