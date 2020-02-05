@@ -107,9 +107,12 @@ public class ContinousIntegrationServer {
 
             String commitID = request.getParameter("id");
             System.out.println("commitid " + commitID);
-            // TODO: add method that takes commitID hash as a parameter and that method returns a string
 
-            return "Commit hash response " + commitID;
+            // TODO: add method that takes commitID hash as a parameter and that method returns a string
+            HTML html = new HTML(false);
+            String listContent = html.createListPayload();
+            String responseHTML = html.createCommitPayload(commitID);
+            return responseHTML;
         }
     }
 
@@ -140,7 +143,7 @@ public class ContinousIntegrationServer {
 
             // TODO: call the function the returns the HTML string for this request type.
             HTML html = new HTML(false);
-            String responseHTML = html.createHTMLPayload();
+            String responseHTML = html.createListPayload();
             return responseHTML;
         }
     }
