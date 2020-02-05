@@ -101,6 +101,7 @@ public class Builder {
     private int mavenInstall(String repoDir, String outputFilePath) throws MavenInvocationException, FileNotFoundException {
         InvocationRequest request = new DefaultInvocationRequest();
         request.setPomFileName(repoDir + "/pom.xml");
+        request.setBaseDirectory(new File(repoDir));
         request.setGoals(Collections.singletonList("install"));
         request.setBatchMode(true);
 
