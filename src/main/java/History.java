@@ -123,10 +123,8 @@ public class History {
             return null;
 
         for (File file : files) {
-            String[] info = file.getName().split("_");
-            if (info.length != 2)
-                continue;
-            if (info[0].compareTo(commitID) == 0)
+            String info = file.getName();;
+            if (info.compareTo(commitID) == 0)
                 return file;
 
         }

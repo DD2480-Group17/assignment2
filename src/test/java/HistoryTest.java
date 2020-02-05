@@ -93,7 +93,7 @@ class HistoryTest {
             fail();
         }
         try {
-            File result = history.searchForCommitID("test1");
+            File result = history.searchForCommitID("test1_20T03T20T30");
             assertNotNull(result);
             assertEquals(file.getName(), result.getName());
             result = history.searchForCommitID("test4");
@@ -124,7 +124,7 @@ class HistoryTest {
             writer.write("hello");
             writer.close();
 
-            assertEquals("hello\\n", history.load("test1"));
+            assertEquals("hello\\n", history.load("test1_20T03T20T30"));
 
         } catch (IOException e) {
             e.printStackTrace();
