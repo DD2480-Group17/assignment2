@@ -1,1 +1,4 @@
 language: java
+before_script:
+  - export M2_HOME="/usr/local/maven"
+  - export MAVEN_HOME="/user/local/maven"
