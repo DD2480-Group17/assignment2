@@ -79,19 +79,35 @@ CI successful build the program.
 test. Then code with successful tests where pushed to the CI server which reported successful test.
 * The ` notification ` function where tested by sending several pushes to the repository and visually inspect if we get notification from the CI server. The notification should
 inform if the test where successful or not, which it does.
+* The ` notification ` TODO
 
 ## Contributions
 We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing.
+We are also proud that we did tests between out program and github to verify functionality.
+
 
 In this section it is specified what each person contributed to the project with.
 
 Edvin Ardö:
+* Code, implemented TODO
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
+
 
 Marcus Jonsson Ewerbring:
+* Code, implemented History, HistoryTest, Utility, UtilityTest and refactored code.
+* Pull request, reviewed several pull requests.
+* Documentation, README and code documentation.
 
 Johanna Iivanainen:
+* Code, implemented History, HistoryTest,... TODO
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
 
 George Rezkalla:
+* Code, implemented History, HistoryTest,... TODO
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
 
 ## Contribution policy: TO DO BEFORE WE COMMIT TO REPO
 * Create a test case for the function you have created.
@@ -101,6 +117,7 @@ George Rezkalla:
 * Code is well-documented, according to JavaDocs standard.
 * No unnecessary code is added (code that is not used).
 * Make sure that the code is correctly implemented.
+
 ### Commit message convention
 `prefix/#issueNR description-of-commit`
 
