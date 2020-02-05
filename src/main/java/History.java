@@ -92,6 +92,10 @@ public class History {
                 System.err.println("File with wrong format: "+file.getName());
                 continue;
             }
+            if (file.getName().charAt(0) == '.'){
+                System.err.println("Hidden caches files: " + file.getName());
+                continue;
+            }
             CommitIDAndTimeStampHolder commitIDAndTimeStampHolder = new CommitIDAndTimeStampHolder(info[0], info[1]);
             holders.add(commitIDAndTimeStampHolder);
         }
