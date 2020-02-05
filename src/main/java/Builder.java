@@ -72,7 +72,7 @@ public class Builder {
             }
 
             String outputFilePath = directoryPath + headCommitHash + "_" + timestamp;
-            mavenInstall(repoDir, outputFilePath);
+            result = mavenInstall(repoDir, outputFilePath);
         } catch (MavenInvocationException | FileNotFoundException e) {
             System.err.println(e.getMessage());
         }
