@@ -33,9 +33,10 @@ public class Builder {
         //parse JSON
         JSONParser parser = new JSONParser(jsonPayload);
         Notifier notifier = new Notifier();
-        String commitHash, branchName, cloneURL, repoName;
+        String headCommitHash, branchName, cloneURL, repoName;
+
         try {
-            commitHash = parser.getHeadCommitHash();
+            headCommitHash = parser.getHeadCommitHash();
             branchName = parser.getBranchName();
             cloneURL = parser.getCloneURL();
             repoName = parser.getRepoName();
@@ -64,8 +65,14 @@ public class Builder {
         // maven install
         int result = -1;
         try {
-            String outputFilePath = "build_history/" + parser.getHeadCommitHash() + "_" + timestamp;
-            result = mavenInstall(repoDir, outputFilePath);
+            String directoryPath = "build_history/";
+            File file = new File(directoryPath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+
+            String outputFilePath = directoryPath + headCommitHash + "_" + timestamp;
+            mavenInstall(repoDir, outputFilePath);
         } catch (MavenInvocationException | FileNotFoundException e) {
             System.err.println(e.getMessage());
         }
