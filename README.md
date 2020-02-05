@@ -75,8 +75,8 @@ The classes ` History `, ` Utility `, ` JSONParser ` and ` LogToString ` are all
 CI successful build the program.
 * The ` execution ` of test cases are automatically preformed on pushed code. The functionality for execution where test by pushing failing tests to the CI server, which reported failed
 test. Then code with successful tests where pushed to the CI server which reported successful test.
-* The ` notification ` TODO
-## Open Source Material
+* The ` notification ` function where tested by sending several pushes to the repository and visually inspect if we get notification from the CI server. The notification should
+inform if the test where successful or not, which it does. 
 
 ## Contributions
 We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing.
