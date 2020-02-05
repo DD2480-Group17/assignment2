@@ -29,7 +29,7 @@ public class Builder {
      *
      * @param jsonPayload A Git webhook payload
      */
-    public void build(String jsonPayload) {
+    public void build(String jsonPayload, String requestURL) {
         //parse JSON
         JSONParser parser = new JSONParser(jsonPayload);
         Notifier notifier = new Notifier();
@@ -51,6 +51,7 @@ public class Builder {
         timestamp = timestamp.replace(":", "T");
 
         String repoDir = "work/temp" + id + "/" + repoName;
+        String targetURL = requestURL.substring(0, requestURL.length() - 8) + "commit/?id=" + headCommitHash + "_" + timestamp;
 
         // update status
         notifier.postStatus(jsonPayload, "pending", "The build is in progress", "continous-integration/assignment2", null);
@@ -78,10 +79,10 @@ public class Builder {
         }
 
         if (result == 0) {// build success
-            notifier.postStatus(jsonPayload, "success", "The build succeeded", "continous-integration/assignment2", null);
+            notifier.postStatus(jsonPayload, "success", "The build succeeded", "continous-integration/assignment2", targetURL);
 
         } else { // build fail
-            notifier.postStatus(jsonPayload, "failure", "The build failed", "continous-integration/assignment2", null);
+            notifier.postStatus(jsonPayload, "failure", "The build failed", "continous-integration/assignment2", targetURL);
         }
 
         // cleanup
