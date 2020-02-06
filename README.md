@@ -71,10 +71,10 @@ The program also has test cases for each class.
 * On the terminal, first, go to the top directory of the project where the pom.xml file exists. Then, the tests can be executed by the following command ` mvn test`.
 
 Example to show the history of commits:
-`http://130.229.177.226:8017/`
+[History of commits](http://130.229.177.226:8017/)
 
 Example to show a single commit's build process:
-`http://130.229.177.226:8017/commit/?id=cf17df7a8c6f861a6c1fb018490529d8d10eafb9_2020T02T06T10T18T21T429392`
+[History of the commit cf17df7a8c6f861a6c1fb018490529d8d10eafb9](http://130.229.177.226:8017/commit/?id=cf17df7a8c6f861a6c1fb018490529d8d10eafb9_2020T02T06T10T18T21T429392)
 
 #### How the functionality where tested
 The classes ` History `, ` Utility `, ` JSONParser ` and ` LogToString ` are all tested by unit-tests. How to run the unit-tests are explained in [Run Test Cases](#Run Test Cases).
