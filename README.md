@@ -56,6 +56,7 @@ When the server is running on your computer following commands can be used. The 
 * ` list all recorded commits ` to view all recorded commits, enter the following in your web-browser `http://COMPUTER_IP:8017`, where COMPUTER_IP is the running computers ip. You could also use the URL `http://localhost:8017`
 * ` View detailed information about one commit ` to view detailed information about a certain commit enter `http://COMPUTER_IP:8017/commit/?id=COMMIT_ID` or `http://localhost:8017/commit/?id=COMMIT_ID`, where COMMIT_ID are the unique hash for the commit to display. The available hashes can be found on the ` list all recorded commits ` page.
 
+
 #### Run Test Cases
 The program also has test cases for each class.
 * On the terminal, first, go to the top directory of the project where the pom.xml file exists. Then, the tests can be executed by the following command ` mvn test`.
@@ -75,9 +76,11 @@ test. Then code with successful tests where pushed to the CI server which report
 * The ` notification ` function where tested by sending several pushes to the repository and visually inspect if we get notification from the CI server. The notification should
 inform if the test where successful or not, which it does.
 
+
 ## Contributions
 We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing.
 We are also proud that we did tests between out program and github to verify functionality.
+
 
 In this section it is specified what each person contributed to the project with.
 
