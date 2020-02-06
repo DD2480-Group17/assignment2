@@ -8,10 +8,9 @@ A continuous integrations server is a server that runs JUnit test automatically 
 user. If the latest push resulted in failed tests. It is possible to connect to the server directly to get the commit history displayed or detailed information about a certain commit.    
 
 ## Files structure
+The file structure of the program is illustrated bellow:
 ```bash
 ├── README.md
-├── cleanup.sh
-├── cloneBuildTest.sh
 ├── pom.xml
 ├── src
 │   ├── main
@@ -20,31 +19,20 @@ user. If the latest push resulted in failed tests. It is possible to connect to 
 │   │       ├── ContinousIntegrationServer.java
 │   │       ├── History.java
 │   │       ├── JSONParser.java
-│   │       └── LogToString.java
+│   │       ├── LogToString.java
+│   │       ├── Notifier.java
+│   │       └── Utility.java
 │   └── test
 │       └── java
 │           ├── HistoryTest.java
 │           ├── JSONParserTest.java
-│           └── LogToStringTest.java
-├── target
-│   ├── classes
-│   │   ├── Builder.class
-│   │   ├── ContinousIntegrationServer.class
-│   │   ├── History$1.class
-│   │   ├── History$CommitIDAndTimeStampHolder.class
-│   │   ├── History.class
-│   │   ├── JSONParser.class
-│   │   └── LogToString.class
-│   ├── generated-sources
-│   │   └── annotations
-│   ├── generated-test-sources
-│   │   └── test-annotations
-│   └── test-classes
-│       ├── HistoryTest.class
-│       ├── JSONParserTest.class
-│       └── LogToStringTest.class
+│           ├── LogToStringTest.java
+│           └── UtilityTest.java
 └── test_build_history
 ```
+The main method is located in `ContinousIntegrationServer` which is a parser for the incoming http request. `Builder` is a class that 
+builds the project and run tests that are pushed to github. All unit-tests for the program is located in the test folder. The `test_build_history` folder
+saves files related to the unit tests.
 ## Tutorial
 #### Required software
 * Java 11
