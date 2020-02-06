@@ -48,14 +48,21 @@ In order to use this CI with your github project you need to link github to the 
 
 #### Run and build the program
 To run and build the program, enter ` mvn -q exec:java -Dexec.mainClass="ContinousIntegrationServer"` in the terminal.
-When the server is running on your computer following commands can be used. The server uses the port 8017, however, to access the program you need to use the running computers IP-address. 
+When the server is running on your computer following commands can be used. The server uses the port 8017, however, to access the program you need to use the running computers IP-address.
 
 * ` list all recorded commits ` to view all recorded commits, enter the following in your web-browser `https://COMPTER_IP:8017`, where COMPUTER_IP is the running computers ip.
-* ` View detailed information about one commit ` to view detailed information about a certain commit enter `https://COMPUTER_IP:8017/commit/?id=COMMIT_ID`, where COMMIT_ID are the unique hash for the commit 
+* ` View detailed information about one commit ` to view detailed information about a certain commit enter `https://COMPUTER_IP:8017/commit/?id=COMMIT_ID`, where COMMIT_ID are the unique hash for the commit
 to display. The available hashes can be found on the ` list all recorded commits ` page.
+
 #### Run Test Cases
 The program also has test cases for each class.
 * On the terminal, first, go to the top directory of the project where the pom.xml file exists. Then, the tests can be executed by the following command ` mvn test`.
+
+Example to show the history of commits:
+[History of commits](http://130.229.177.226:8017/)
+
+Example to show a single commit's build process:
+[History of the commit cf17df7a8c6f861a6c1fb018490529d8d10eafb9](http://130.229.177.226:8017/commit/?id=cf17df7a8c6f861a6c1fb018490529d8d10eafb9_2020T02T06T10T18T21T429392)
 
 #### How the functionality where tested
 The classes ` History `, ` Utility `, ` JSONParser ` and ` LogToString ` are all tested by unit-tests. How to run the unit-tests are explained in [Run Test Cases](#Run Test Cases).
@@ -64,7 +71,7 @@ CI successful build the program.
 * The ` execution ` of test cases are automatically preformed on pushed code. The functionality for execution where test by pushing failing tests to the CI server, which reported failed
 test. Then code with successful tests where pushed to the CI server which reported successful test.
 * The ` notification ` function where tested by sending several pushes to the repository and visually inspect if we get notification from the CI server. The notification should
-inform if the test where successful or not, which it does. 
+inform if the test where successful or not, which it does.
 
 ## Contributions
 We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing.
@@ -75,6 +82,7 @@ Edvin Ardö:
 
 
 Marcus Jonsson Ewerbring:
+
 
 Johanna Iivanainen:
 
