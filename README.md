@@ -100,12 +100,12 @@ Marcus Jonsson Ewerbring:
 * Documentation, README and code documentation.
 
 Johanna Iivanainen:
-* Code, implemented History, HistoryTest,... TODO
+* Code, implemented History, HistoryTest, HTML, HTMLTest and HTML templet
 * Pull request, reviewed several pull requests.
 * Documentation, code documentation.
 
 George Rezkalla:
-* Code, implemented History, HistoryTest,... TODO
+* Code, implemented/refactored handlers to handle requests for listing commit history, a particular commit and webhooks.
 * Pull request, reviewed several pull requests.
 * Documentation, code documentation.
 
