@@ -30,10 +30,12 @@ The file structure of the program is illustrated bellow:
 │           └── UtilityTest.java
 └── test_build_history
 ```
-The main method is located in `ContinousIntegrationServer` which is a parser for the incoming http request. `Builder` is a class that 
+The main method is located in `ContinousIntegrationServer` which is a parser for the incoming http request. `Builder` is a class that
 builds the project and run tests that are pushed to github. All unit-tests for the program is located in the test folder. The `test_build_history` folder
 saves files related to the unit tests.
+
 ## Tutorial
+
 #### Required software
 * Java 11
 * Apache Maven 3.6.0
@@ -48,11 +50,11 @@ In order to use this CI with your github project you need to link github to the 
 
 #### Run and build the program
 To run and build the program, enter ` mvn -q exec:java -Dexec.mainClass="ContinousIntegrationServer"` in the terminal.
-When the server is running on your computer following commands can be used. The server uses the port 8017, however, to access the program you need to use the running computers IP-address.
 
-* ` list all recorded commits ` to view all recorded commits, enter the following in your web-browser `https://COMPTER_IP:8017`, where COMPUTER_IP is the running computers ip.
-* ` View detailed information about one commit ` to view detailed information about a certain commit enter `https://COMPUTER_IP:8017/commit/?id=COMMIT_ID`, where COMMIT_ID are the unique hash for the commit
-to display. The available hashes can be found on the ` list all recorded commits ` page.
+When the server is running on your computer following commands can be used. The server uses the port 8017, however, to access the program you need to use the running computers IP-address or use localhost.
+
+* ` list all recorded commits ` to view all recorded commits, enter the following in your web-browser `http://COMPUTER_IP:8017`, where COMPUTER_IP is the running computers ip. You could also use the URL `http://localhost:8017`
+* ` View detailed information about one commit ` to view detailed information about a certain commit enter `http://COMPUTER_IP:8017/commit/?id=COMMIT_ID` or `http://localhost:8017/commit/?id=COMMIT_ID`, where COMMIT_ID are the unique hash for the commit to display. The available hashes can be found on the ` list all recorded commits ` page.
 
 #### Run Test Cases
 The program also has test cases for each class.
@@ -75,19 +77,32 @@ inform if the test where successful or not, which it does.
 
 ## Contributions
 We are proud over our implementation of the program and that we used Travis for continuous integration (CI). We have learnt a lot during the lab on how a git project should be structured, by using issues, specific prefix for our commits, pull requests and testing.
+We are also proud that we did tests between out program and github to verify functionality.
 
 In this section it is specified what each person contributed to the project with.
 
 Edvin Ardö:
+* Code, implemented JSONParser and CI functionality to clone, build and notify.
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
 
 
 Marcus Jonsson Ewerbring:
+* Code, implemented History, HistoryTest, Utility, UtilityTest and refactored code.
+* Pull request, reviewed several pull requests.
+* Documentation, README and code documentation.
 
 
 Johanna Iivanainen:
+* Code, implemented History, HistoryTest, HTML, HTMLTest and HTML templet
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
 
 
 George Rezkalla:
+* Code, implemented/refactored handlers to handle requests for listing commit history, a particular commit and webhooks.
+* Pull request, reviewed several pull requests.
+* Documentation, code documentation.
 
 ## Contribution policy: TO DO BEFORE WE COMMIT TO REPO
 * Create a test case for the function you have created.
@@ -97,6 +112,7 @@ George Rezkalla:
 * Code is well-documented, according to JavaDocs standard.
 * No unnecessary code is added (code that is not used).
 * Make sure that the code is correctly implemented.
+
 ### Commit message convention
 `prefix/#issueNR description-of-commit`
 
