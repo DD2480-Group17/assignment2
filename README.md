@@ -92,6 +92,12 @@ Johanna Iivanainen:
 
 
 George Rezkalla:
+* Implemented a previous prototype to handle exit status.
+* Implemented/refactored handlers to handle requests for listing commit history, a particular commit
+and webhooks.
+* Done pull requests.
+* Done reviews.
+* Implemented three main test cases.
 
 ## Contribution policy: TO DO BEFORE WE COMMIT TO REPO
 * Create a test case for the function you have created.
