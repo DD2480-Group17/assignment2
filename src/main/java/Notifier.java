@@ -3,8 +3,6 @@ import java.io.*;
 import java.net.URL;
 
 public class Notifier {
-    private static final String tokenFile = ".token";//file path to git access token
-
     /**
      * Sends a HTTP POST to the given URL with the given JSON data, authenticated with token
      *
@@ -46,24 +44,11 @@ public class Notifier {
                     "  \"description\": \"" + description + "\",\n" +
                     "  \"context\": \"" + context + "\"\n" +
                     "}";
-            post(url, postJson, readToken());
+            post(url, postJson, Utility.readToken());
             System.out.println("Sent status update \"" + state + "\" to: " + url);
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    /**
-     * Reads git access token from file
-     *
-     * @return The git access token
-     */
-    public static String readToken() throws IOException {
-        File file = new File(tokenFile);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String token = reader.readLine();
-        reader.close();
-        return token;
     }
 }
