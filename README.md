@@ -89,7 +89,7 @@ We are also proud that we did tests between out program and github to verify fun
 In this section it is specified what each person contributed to the project with.
 
 Edvin Ardö:
-* Code, implemented TODO
+* Code, implemented JSONParser and CI functionality to clone, build and notify.
 * Pull request, reviewed several pull requests.
 * Documentation, code documentation.
 
